@@ -22,7 +22,9 @@
 ## Download & Install
 
 1. Go to the [Releases](https://github.com/Donvine254/pulse-break/releases) page
-2. Download the latest `.exe` installer (`pulse-break_x.x.x_x64-setup.exe`)
+2. Download the latest installer for your preference:
+   - **`pulse-break_0.1.0_x64-setup.exe`** — NSIS installer (recommended)
+   - **`pulse-break_0.1.0_x64_en-US.msi`** — MSI installer
 3. Run the installer and follow the prompts
 4. Pulse Break will launch and appear in your system tray
 
@@ -68,7 +70,9 @@ npm run tauri build
 The installer will be output to:
 
 ```
-src-tauri/target/release/bundle/nsis/pulse-break_x.x.x_x64-setup.exe
+src-tauri/target/release/bundle/nsis/pulse-break_0.1.0_x64-setup.exe
+src-tauri/target/release/bundle/msi/pulse-break_0.1.0_x64_en-US.msi
+
 ```
 
 ---
