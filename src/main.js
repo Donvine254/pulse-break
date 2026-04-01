@@ -31,12 +31,12 @@ const messages = [
 // Audio file URLs - each one matches a message above
 // When a notification shows, a random message + its audio will play
 const audioUrls = [
-  "/audio/break1.mp3", // Plays for message 0: "Time for a break! Stand up and stretch..."
-  "/audio/break2.mp3", // Plays for message 1: "Break time! Give your eyes a rest..."
-  "/audio/break3.mp3", // Plays for message 2: "Take a breather! Walk around..."
-  "/audio/break4.mp3", // Plays for message 3: "Reminder: It's time to hydrate..."
-  "/audio/break5.mp3", // Plays for message 4: "Time to pause! Stretch your arms..."
-  "/audio/break6.mp3", // Plays for message 5: "Break reminder! Step away from your desk..."
+  "audio/break1.mp3", // Plays for message 0: "Time for a break! Stand up and stretch..."
+  "audio/break2.mp3", // Plays for message 1: "Break time! Give your eyes a rest..."
+  "audio/break3.mp3", // Plays for message 2: "Take a breather! Walk around..."
+  "audio/break4.mp3", // Plays for message 3: "Reminder: It's time to hydrate..."
+  "audio/break5.mp3", // Plays for message 4: "Time to pause! Stretch your arms..."
+  "audio/break6.mp3", // Plays for message 5: "Break reminder! Step away from your desk..."
 ];
 
 // ========================================
