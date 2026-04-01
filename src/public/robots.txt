@@ -1,0 +1,14 @@
+# Pulse Break robots.txt -- take a break will you? 🍲
+# Alright, have at it!
+# smile and crawl responsibly!
+# *
+User-agent: *
+Allow: /
+
+
+# Host
+Host: 
+
+# Sitemaps
+Sitemap: 
+
