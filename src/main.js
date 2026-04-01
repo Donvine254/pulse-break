@@ -49,6 +49,18 @@ window.__TAURI__.event.listen("window-hidden", () => {
     body: 'Minimized to the system tray. Left click the tray icon or choose "Open Pulse Break" to reopen.',
   });
 });
+
+// Listen for notifications disable event
+window.__TAURI__.event.listen("toggle-mute", () => {
+  notificationsEnabled = !notificationsEnabled;
+  // update the toggle UI to reflect the change
+  const toggle = document.getElementById("toggle-notifications");
+  if (notificationsEnabled) {
+    toggle.classList.add("active");
+  } else {
+    toggle.classList.remove("active");
+  }
+});
 // ========================================
 // PRESET BUTTON HANDLERS
 // ========================================
