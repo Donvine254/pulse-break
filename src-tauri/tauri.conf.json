@@ -10,7 +10,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "pulse-break",
+        "title": "Pulse Break",
         "width": 800,
         "height": 600
       }
@@ -29,5 +29,6 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
-  }
+  },
+  "devTools": true
 }
