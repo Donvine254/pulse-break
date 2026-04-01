@@ -43,9 +43,12 @@ const audioUrls = [
 // NOTIFICATION PERMISSION REQUEST
 // ========================================
 
-// Ask user for permission to show desktop notifications when page loads
-if ("Notification" in window && Notification.permission === "default") {
-  Notification.requestPermission();
+if (notificationsEnabled) {
+  const { sendNotification } = window.__TAURI__.notification;
+  sendNotification({
+    title: "Time to take a break! ⏰",
+    body: message,
+  });
 }
 
 // ========================================
@@ -397,5 +400,3 @@ function playBeepSound() {
   oscillator.start(audioContext.currentTime);
   oscillator.stop(audioContext.currentTime + 0.5);
 }
-
-
