@@ -43,14 +43,6 @@ const audioUrls = [
 // NOTIFICATION PERMISSION REQUEST
 // ========================================
 
-if (notificationsEnabled) {
-  const { sendNotification } = window.__TAURI__.notification;
-  sendNotification({
-    title: "Time to take a break! ⏰",
-    body: message,
-  });
-}
-
 // ========================================
 // PRESET BUTTON HANDLERS
 // ========================================
@@ -318,12 +310,11 @@ function showNotification() {
     playSound(randomIndex); // Pass the index to play matching audio
   }
 
-  // Show browser notification if permissions granted
-  if (notificationsEnabled && Notification.permission === "granted") {
-    new Notification("Break Time! ⏰", {
+  if (notificationsEnabled) {
+    const { sendNotification } = window.__TAURI__.notification;
+    sendNotification({
+      title: "Time to take a break! ⏰",
       body: message,
-      icon: "⏰",
-      badge: "⏰",
     });
   }
 }
