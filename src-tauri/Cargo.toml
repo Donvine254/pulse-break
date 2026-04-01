@@ -1,8 +1,8 @@
 [package]
 name = "pulse-break"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "PulseBreak is a free Windows app that helps you stay active by reminding you to stand up, stretch, or take a walk at regular intervals. Boost your wellbeing with gentle notifications and sound alerts while working"
+authors = ["Muturi Donvine"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
