@@ -40,9 +40,15 @@ const audioUrls = [
 ];
 
 // ========================================
-// NOTIFICATION PERMISSION REQUEST
+// NOTIFICATION OF WINDOW CLOSE
 // ========================================
-
+window.__TAURI__.event.listen("window-hidden", () => {
+  const { sendNotification } = window.__TAURI__.notification;
+  sendNotification({
+    title: "Pulse Break",
+    body: 'Minimized to the system tray. Left click the tray icon or choose "Open Pulse Break" to reopen.',
+  });
+});
 // ========================================
 // PRESET BUTTON HANDLERS
 // ========================================
