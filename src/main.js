@@ -91,15 +91,8 @@ function toggleOption(option) {
   toggle.classList.toggle("active");
 
   if (option === "notifications") {
-    // Update notifications enabled flag
     notificationsEnabled = toggle.classList.contains("active");
-
-    // Request permission if enabling notifications for first time
-    if (notificationsEnabled && Notification.permission === "default") {
-      Notification.requestPermission();
-    }
   } else if (option === "sound") {
-    // Update sound enabled flag
     soundEnabled = toggle.classList.contains("active");
   }
 }
