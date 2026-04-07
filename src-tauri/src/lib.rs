@@ -1,12 +1,11 @@
-use tauri::{
-    Emitter,
-    Manager,
-    menu::{Menu, MenuItem},
-    tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
-};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
-
+use tauri::{
+    menu::{Menu, MenuItem},
+    tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
+    Emitter, Manager,
+};
+use tauri_plugin_single_instance;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let mute_state = Arc::new(AtomicBool::new(false));
@@ -22,7 +21,8 @@ pub fn run() {
         .plugin(tauri_plugin_notification::init())
         .setup(move |app| {
             let quit_i = MenuItem::with_id(app, "quit", "Quit App", true, None::<&str>)?;
-            let mute_i = MenuItem::with_id(app, "mute", "Mute Notifications: Off", true, None::<&str>)?;
+            let mute_i =
+                MenuItem::with_id(app, "mute", "Mute Notifications: Off", true, None::<&str>)?;
             let mute_i_clone = mute_i.clone();
             let show_i = MenuItem::with_id(app, "show", "Open App", true, None::<&str>)?;
             let menu = Menu::with_items(app, &[&show_i, &mute_i, &quit_i])?;

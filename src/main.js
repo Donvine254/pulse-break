@@ -48,7 +48,9 @@ window.__TAURI__.event.listen("window-hidden", () => {
     title: "Pulse Break",
     body: 'Minimized to the system tray. Left click the tray icon or choose "Open Pulse Break" to reopen.',
   });
-  playBeepSound();
+  if (soundEnabled) {
+    playBeepSound();
+  }
 });
 
 // Listen for notifications disable event
@@ -219,9 +221,10 @@ function endBreakTime() {
       title: "Break time over! ✅",
       body: "Back to work! Your next break reminder is set.",
     });
-    playBeepSound();
+    if (soundEnabled) {
+      playBeepSound();
+    }
   }
-
   startWorkTimer();
 }
 
