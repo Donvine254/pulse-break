@@ -48,6 +48,7 @@ window.__TAURI__.event.listen("window-hidden", () => {
     title: "Pulse Break",
     body: 'Minimized to the system tray. Left click the tray icon or choose "Open Pulse Break" to reopen.',
   });
+  playBeepSound();
 });
 
 // Listen for notifications disable event
@@ -118,6 +119,16 @@ function toggleOption(option) {
 // ========================================
 // START/STOP TIMER CONTROL
 // ========================================
+function startWorkTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    remainingTime--;
+    if (remainingTime <= 0) {
+      startBreakTime();
+    }
+    updateCountdown();
+  }, 1000);
+}
 
 function toggleTimer() {
   if (isRunning) {
@@ -128,45 +139,26 @@ function toggleTimer() {
 }
 
 function startTimer() {
-  // Clear any existing timers to avoid duplicates
   clearInterval(timerInterval);
   clearInterval(breakInterval);
-
-  // Get values from the time input fields
   const hours = parseInt(document.getElementById("hours").value) || 0;
   const minutes = parseInt(document.getElementById("minutes").value) || 0;
   const seconds = parseInt(document.getElementById("seconds").value) || 0;
-
-  // Calculate total time in seconds
   remainingTime = hours * 3600 + minutes * 60 + seconds;
 
-  // Validate that user set a time
   if (remainingTime === 0) {
     alert("Please set a time interval!");
     return;
   }
 
-  // Update UI to show timer is running
   isRunning = true;
   isOnBreak = false;
   document.getElementById("startBtn").textContent = "Stop Reminder";
   document.getElementById("startBtn").classList.add("active");
   document.getElementById("status").classList.add("active");
 
-  // Show initial countdown
   updateCountdown();
-
-  // Start the work timer - counts down every second
-  timerInterval = setInterval(() => {
-    remainingTime--;
-
-    // When work time reaches zero, start break
-    if (remainingTime <= 0) {
-      startBreakTime(); // Trigger break period
-    }
-
-    updateCountdown(); // Update the display
-  }, 1000);
+  startWorkTimer();
 }
 
 // ========================================
@@ -210,34 +202,27 @@ function startBreakTime() {
 }
 
 function endBreakTime() {
-  // Ensure break interval is cleared
   clearInterval(breakInterval);
-
-  // Reset flags
   isOnBreak = false;
 
-  // Get the original work duration from inputs
   const hours = parseInt(document.getElementById("hours").value) || 0;
   const minutes = parseInt(document.getElementById("minutes").value) || 0;
   const seconds = parseInt(document.getElementById("seconds").value) || 0;
 
-  // Reset work timer to original duration
   remainingTime = hours * 3600 + minutes * 60 + seconds;
 
-  // Update status text back to work mode
   document.querySelector(".status-text").textContent = "Next break in:";
 
-  // Restart the work timer so the cycle continues
-  clearInterval(timerInterval);
-  timerInterval = setInterval(() => {
-    remainingTime--;
+  if (notificationsEnabled) {
+    const { sendNotification } = window.__TAURI__.notification;
+    sendNotification({
+      title: "Break time over! ✅",
+      body: "Back to work! Your next break reminder is set.",
+    });
+    playBeepSound();
+  }
 
-    if (remainingTime <= 0) {
-      startBreakTime();
-    }
-
-    updateCountdown();
-  }, 1000);
+  startWorkTimer();
 }
 
 function stopTimer() {
@@ -381,24 +366,26 @@ function playSound(index) {
 // ========================================
 
 function playBeepSound() {
-  // Creates a simple beep using Web Audio API
-  // This is a backup if audio files fail to load
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  const oscillator = audioContext.createOscillator();
-  const gainNode = audioContext.createGain();
+  try {
+    const audioContext = new AudioContext();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
 
-  oscillator.connect(gainNode);
-  gainNode.connect(audioContext.destination);
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
 
-  oscillator.frequency.value = 800; // Frequency in Hz
-  oscillator.type = "sine"; // Sine wave for smooth tone
+    oscillator.frequency.value = 800;
+    oscillator.type = "sine";
 
-  gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-  gainNode.gain.exponentialRampToValueAtTime(
-    0.01,
-    audioContext.currentTime + 0.5,
-  );
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(
+      0.01,
+      audioContext.currentTime + 0.5,
+    );
 
-  oscillator.start(audioContext.currentTime);
-  oscillator.stop(audioContext.currentTime + 0.5);
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.5);
+  } catch (error) {
+    console.error("Beep sound failed:", error);
+  }
 }
