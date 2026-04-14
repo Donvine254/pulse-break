@@ -302,7 +302,10 @@ function showNotification() {
   // Show the modal popup with the selected message
   document.getElementById("modal").classList.add("show");
   document.querySelector(".modal-message").textContent = message;
-
+  // TODO: SET TIMEOUT TO AUTOCLOSE THE MODAL IF NO RESPONSE
+  setTimeout(() => {
+    dismissNotification();
+  }, 10000);
   // Play the corresponding audio if sound is enabled
   // We pass the SAME randomIndex so the audio matches the message
   if (soundEnabled) {

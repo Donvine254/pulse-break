@@ -355,8 +355,8 @@ body {
 
 .modal-content {
   background: white;
-  padding: 40px;
-  border-radius: 24px;
+  padding: 24px;
+  border-radius: 12px;
   text-align: center;
   max-width: 400px;
   animation: scaleIn 0.3s ease-out;
@@ -392,7 +392,7 @@ body {
 }
 
 .modal-btn {
-  padding: 15px 40px;
+  padding: 14px 24px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
